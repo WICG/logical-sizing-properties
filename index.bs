@@ -31,22 +31,28 @@ Logical sizing shorthand: the 'size' property</h3>
 
   <p>Where
   <pre class=prod><dfn>&lt;sizing&gt;</dfn> = [
-    <<size-dimension>> |
-    [ <<size-dimension>> <<size-dimension>> ]
+    <<inline-size-dimension>> |
+    [ <<inline-size-dimension>> <<block-size-dimension>> ]
   ]</pre>
-  <pre class=prod><dfn>&lt;size-dimension&gt;</dfn> = [
+  <pre class=prod><dfn>&lt;inline-size-dimension&gt;</dfn> = [
     <<'inline-size'>> |
     <<'aspect-ratio'>> |
     [ <<'min-inline-size'>>/<<'max-inline-size'>> ] |
     [ <<'min-inline-size'>>/<<'inline-size'>>/<<'max-inline-size'>> ]
   ]</pre>
+  <pre class=prod><dfn>&lt;block-size-dimension&gt;</dfn> = [
+    <<'block-size'>> |
+    <<'aspect-ratio'>> |
+    [ <<'min-block-size'>>/<<'max-block-size'>> ] |
+    [ <<'min-block-size'>>/<<'block-size'>>/<<'max-block-size'>> ]
+  ]</pre>
 
 The 'size' property is a shorthand property for setting logical sizing and box sizing.
 
-If one 'size-dimension' is specified the second is assumed to being the same value.
+If only 'inline-size-dimension' is specified 'block-size-dimension' is set to the same value unless an 'aspect-ratio' is defined in which case 'block-size-dimension' is set to ''auto''.
 
 <div class="example">
-  For example if just one 'size-dimension' is given both inline-size and block-size would be 12px.
+  For example if just 'inline-size-dimension' is given both 'inline-size' and 'block-size' would be 12px.
   <pre>
     img {
       size: 12px;
@@ -54,7 +60,8 @@ If one 'size-dimension' is specified the second is assumed to being the same val
   </pre>
 </div>
 
-If two 'size-dimension' are specified the first specifies the 'inline-size' and the second is 'block-size'.
+When only the max/min sizes are specified 'block-size'/'inline-size' are set to ''auto''.
+If both 'inline-size-dimension' and 'block-size-dimension' are specified they specify 'inline-size' and 'block-size' respectively.
 
 <div class="example">
   For example the following defines an image that has an 'inline-size' of 12px and a 'min-block-size' of 12px and a 'max-block-size' of 20px with ''border-box'' 'box-sizing'.
@@ -63,6 +70,8 @@ If two 'size-dimension' are specified the first specifies the 'inline-size' and 
       size: 12px 12px/20px border-box;
     }
   </pre>
+
+  'block-size' would also be ''auto'' in this case.
 </div>
 
 <h3 id="aspect-ratio-property">
