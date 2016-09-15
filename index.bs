@@ -38,13 +38,13 @@ Logical sizing shorthand: the 'size' property</h3>
     <<'inline-size'>> |
     <<'aspect-ratio'>> |
     [ <<'min-inline-size'>>/<<'max-inline-size'>> ] |
-    [ <<'min-inline-size'>>/<<'inline-size'>>/<<'max-inline-size'>> ]
+    [ <<'min-inline-size'>>/[<<'inline-size'>>|<<'aspect-ratio'>>]/<<'max-inline-size'>> ]
   ]</pre>
   <pre class=prod><dfn>&lt;block-size-dimension&gt;</dfn> = [
     <<'block-size'>> |
     <<'aspect-ratio'>> |
     [ <<'min-block-size'>>/<<'max-block-size'>> ] |
-    [ <<'min-block-size'>>/<<'block-size'>>/<<'max-block-size'>> ]
+    [ <<'min-block-size'>>/[<<'block-size'>>|<<'aspect-ratio'>>]/<<'max-block-size'>> ]
   ]</pre>
 
 The 'size' property is a shorthand property for setting logical sizing and box sizing.
@@ -80,6 +80,8 @@ If both 'inline-size-dimension' and 'block-size-dimension' are specified they sp
 
   'block-size' would also be ''auto'' in this case.
 </div>
+
+If 'aspect-ratio' is defined in both 'inline-size-dimension' and 'block-size-dimension' it is a syntax error.
 
 <h3 id="aspect-ratio-property">
 Aspect based sizing: the 'aspect-ratio' property</h3>
