@@ -1,0 +1,1 @@
+# Logical sizing properties specification
