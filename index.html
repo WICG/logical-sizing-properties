@@ -1417,6 +1417,7 @@ A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/
      <a href="#references"><span class="secno"></span> <span class="content">References</span></a>
      <ol class="toc">
       <li><a href="#normative"><span class="secno"></span> <span class="content">Normative References</span></a>
+      <li><a href="#informative"><span class="secno"></span> <span class="content">Informative References</span></a>
      </ol>
     <li><a href="#property-index"><span class="secno"></span> <span class="content">Property Index</span></a>
     <li><a href="#issues-index"><span class="secno"></span> <span class="content">Issues Index</span></a>
@@ -1468,11 +1469,19 @@ A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/
   [ <a class="production" data-link-type="propdesc" href="https://drafts.csswg.org/css-logical-props-1/#propdef-min-inline-size">&lt;‘min-inline-size’></a>/<a class="production" data-link-type="propdesc" href="https://svgwg.org/svg2-draft/text.html#InlineSizeProperty">&lt;‘inline-size’></a>/<a class="production" data-link-type="propdesc" href="https://drafts.csswg.org/css-logical-props-1/#propdef-max-inline-size">&lt;‘max-inline-size’></a> ]
 ]</pre>
    <p>The <a class="property" data-link-type="propdesc" href="#propdef-size" id="ref-for-propdef-size-2">size</a> property is a shorthand property for setting logical sizing and box sizing.</p>
-   <p>If one size-dimension is specified the second is assumed to being the same value.</p>
+   <p>If one <a class="property" data-link-type="propdesc">size-dimension</a> is specified the second is assumed to being the same value.</p>
    <div class="example" id="example-52c194aa">
     <a class="self-link" href="#example-52c194aa"></a> For example if just one <a class="property" data-link-type="propdesc">size-dimension</a> is given both inline-size and block-size would be 12px. 
 <pre>img {
   size: 12px;
+}
+</pre>
+   </div>
+   <p>If two <a class="property" data-link-type="propdesc">size-dimension</a> are specified the first specifies the <a class="property" data-link-type="propdesc" href="https://svgwg.org/svg2-draft/text.html#InlineSizeProperty">inline-size</a> and the second is <a class="property" data-link-type="propdesc" href="https://drafts.csswg.org/css-logical-props-1/#propdef-block-size">block-size</a>.</p>
+   <div class="example" id="example-db5f90c5">
+    <a class="self-link" href="#example-db5f90c5"></a> For example the following defines an image that has an <a class="property" data-link-type="propdesc" href="https://svgwg.org/svg2-draft/text.html#InlineSizeProperty">inline-size</a> of 12px and a <a class="property" data-link-type="propdesc" href="https://drafts.csswg.org/css-logical-props-1/#propdef-min-block-size">min-block-size</a> of 12px and a <a class="property" data-link-type="propdesc" href="https://drafts.csswg.org/css-logical-props-1/#propdef-max-block-size">max-block-size</a> of 20px with <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-shapes-1/#valdef-shape-box-border-box">border-box</a> <a class="property" data-link-type="propdesc" href="https://drafts.csswg.org/css-ui-3/#propdef-box-sizing">box-sizing</a>. 
+<pre>img {
+  size: 12px 12px/20px border-box;
 }
 </pre>
    </div>
@@ -1695,7 +1704,9 @@ A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/
     <a data-link-type="biblio">[css-logical-props-1]</a> defines the following terms:
     <ul>
      <li><a href="https://drafts.csswg.org/css-logical-props-1/#propdef-block-size">block-size</a>
+     <li><a href="https://drafts.csswg.org/css-logical-props-1/#propdef-max-block-size">max-block-size</a>
      <li><a href="https://drafts.csswg.org/css-logical-props-1/#propdef-max-inline-size">max-inline-size</a>
+     <li><a href="https://drafts.csswg.org/css-logical-props-1/#propdef-min-block-size">min-block-size</a>
      <li><a href="https://drafts.csswg.org/css-logical-props-1/#propdef-min-inline-size">min-inline-size</a>
     </ul>
    <li>
@@ -1708,6 +1719,11 @@ A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/
     <ul>
      <li><a href="https://drafts.csswg.org/css-position-3/#propdef-left">left</a>
      <li><a href="https://drafts.csswg.org/css-position-3/#propdef-right">right</a>
+    </ul>
+   <li>
+    <a data-link-type="biblio">[css-shapes-1]</a> defines the following terms:
+    <ul>
+     <li><a href="https://drafts.csswg.org/css-shapes-1/#valdef-shape-box-border-box">border-box</a>
     </ul>
    <li>
     <a data-link-type="biblio">[css-ui-3]</a> defines the following terms:
@@ -1755,6 +1771,11 @@ A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/
    <dd>S. Bradner. <a href="https://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>. March 1997. Best Current Practice. URL: <a href="https://tools.ietf.org/html/rfc2119">https://tools.ietf.org/html/rfc2119</a>
    <dt id="biblio-svg2">[SVG2]
    <dd>Nikos Andronikos; et al. <a href="https://svgwg.org/svg2-draft/">Scalable Vector Graphics (SVG) 2</a>. 15 September 2015. WD. URL: <a href="https://svgwg.org/svg2-draft/">https://svgwg.org/svg2-draft/</a>
+  </dl>
+  <h3 class="no-num no-ref heading settled" id="informative"><span class="content">Informative References</span><a class="self-link" href="#informative"></a></h3>
+  <dl>
+   <dt id="biblio-css-shapes-1">[CSS-SHAPES-1]
+   <dd>Vincent Hardy; Rossen Atanassov; Alan Stearns. <a href="http://dev.w3.org/csswg/css-shapes/">CSS Shapes Module Level 1</a>. 20 March 2014. CR. URL: <a href="http://dev.w3.org/csswg/css-shapes/">http://dev.w3.org/csswg/css-shapes/</a>
   </dl>
   <h2 class="no-num no-ref heading settled" id="property-index"><span class="content">Property Index</span><a class="self-link" href="#property-index"></a></h2>
   <div class="big-element-wrapper">

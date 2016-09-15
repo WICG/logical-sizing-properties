@@ -43,13 +43,24 @@ Logical sizing shorthand: the 'size' property</h3>
 
 The 'size' property is a shorthand property for setting logical sizing and box sizing.
 
-If one size-dimension is specified the second is assumed to being the same value.
+If one 'size-dimension' is specified the second is assumed to being the same value.
 
 <div class="example">
   For example if just one 'size-dimension' is given both inline-size and block-size would be 12px.
   <pre>
     img {
       size: 12px;
+    }
+  </pre>
+</div>
+
+If two 'size-dimension' are specified the first specifies the 'inline-size' and the second is 'block-size'.
+
+<div class="example">
+  For example the following defines an image that has an 'inline-size' of 12px and a 'min-block-size' of 12px and a 'max-block-size' of 20px with ''border-box'' 'box-sizing'.
+  <pre>
+    img {
+      size: 12px 12px/20px border-box;
     }
   </pre>
 </div>
