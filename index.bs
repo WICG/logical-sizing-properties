@@ -49,13 +49,20 @@ Logical sizing shorthand: the 'size' property</h3>
 
 The 'size' property is a shorthand property for setting logical sizing and box sizing.
 
-If only 'inline-size-dimension' is specified 'block-size-dimension' is set to the same value unless an 'aspect-ratio' is defined in which case 'block-size-dimension' is set to ''auto''.
+If only 'inline-size-dimension' is specified 'block-size-dimension' is set to the same value unless an 'aspect-ratio' is defined in which case 'block-size-dimension' and 'inline-size-dimension' are set to  ''auto'' and the 'aspect-ratio' is used.
 
 <div class="example">
   For example if just 'inline-size-dimension' is given both 'inline-size' and 'block-size' would be 12px.
   <pre>
     img {
       size: 12px;
+    }
+  </pre>
+
+  If however the image is set to a ratio and it's inside a 400px wide container the 'inline-size' and 'block-size' are ''auto'' and the ratio the result of <code>calc(1/2)</code> resulting in a 400px x 200px image.
+  <pre>
+    img {
+      size: calc(2/1);
     }
   </pre>
 </div>
@@ -117,7 +124,7 @@ The 'aspect-ratio' property controls the resolution of underspecified values for
       <li>
         Attempt to set the used value of the element's 'block-size' to the result of dividing the element's 'inline-size' by the 'aspect-ratio'.
       <li>
-        If the previous step would cause the element's 'block-size' to be in violation of a min or max constraint, then instead set the element's 'block-size' to the value required by those constrains, then attempt to set the used value of the element's 'inline-size' to the result of multiplying the element's 'block-size' by the 'aspect-ratio'.
+        If the previous step would cause the element's 'block-size' to be in violation of a min or max constraint, then instead set the element's 'block-size' to the value required by those constraints, then attempt to set the used value of the element's 'inline-size' to the result of multiplying the element's 'block-size' by the 'aspect-ratio'.
       <li>
         If the previous step would cause the element's 'inline-size' to be in violation of a min or max constraint, then instead ignore the 'aspect-ratio' property on this element.
 
