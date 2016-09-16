@@ -19,7 +19,7 @@
       }
       .demo {
         border: 2px solid #000;
-        width: 500px;
+        width: 50vw;
         height: 500px;
       }
       .demo-block {
@@ -30,12 +30,12 @@
   <body>
     <h1>Sizing demo</h1>
     <p>This is an realtime demo of the <a href="https://jonathankingston.github.io/logical-sizing-properties/">Logical sizing properties spec</a></p>
-    <p>Change the value of the size property to see live changes in the demo block.</p>
+    <p>Change the value of the size property to see live changes in the demo block and resize the browser to see aspect changing.</p>
     <pre>
       <code>
         <span class="selector">.demo-block</span> {
           <span class="property-name">background</span>: <span class="value">red</span>;
-          <span class="property-name">size</span>: <span id="sizevalue" class="value" contenteditable>100% 20px / calc(2/1) /300px border-box</span>;
+          <span class="property-name">size</span>: <span id="sizevalue" class="value" contenteditable>80% 40px / calc(2/1) / 100px border-box</span>;
         }
       </code>
     </pre>
@@ -50,6 +50,7 @@
       sizeval.addEventListener('keyup', (e) => {
         setElSize();
       });
+      window.onresize = setElSize;
       function setElSize() {
         const size = sizeval.textContent;
         let props = {
@@ -118,15 +119,18 @@
         if (props['aspect-ratio'] &&
             props['inline-size'] == 'auto' &&
             props['block-size'] == 'auto') {
-          setProp(demoblock, 'block-size', demoblock.clientWidth / props['aspect-ratio'] + 'px');
+          let calcSize = demoblock.clientWidth / props['aspect-ratio'];
+          setProp(demoblock, 'block-size', calcSize + 'px');
         }
         if (props['aspect-ratio'] &&
             props['inline-size'] == 'auto') {
-          setProp(demoblock, 'inline-size', demoblock.clientHeight * props['aspect-ratio'] + 'px');
+          let calcSize = demoblock.clientHeight * props['aspect-ratio'];
+          setProp(demoblock, 'inline-size', calcSize + 'px');
         }
         if (props['aspect-ratio'] &&
             props['block-size'] == 'auto') {
-          setProp(demoblock, 'block-size', demoblock.clientWidth / props['aspect-ratio'] + 'px');
+          let calcSize = demoblock.clientWidth / props['aspect-ratio'];
+          setProp(demoblock, 'block-size', calcSize + 'px');
         }
       }
 
