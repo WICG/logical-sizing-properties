@@ -22,9 +22,6 @@
         width: 50vw;
         height: 500px;
       }
-      .demo-block {
-        background: red;
-      }
     </style>
   </head>
   <body>
@@ -34,7 +31,7 @@
     <pre>
       <code>
         <span class="selector">.demo-block</span> {
-          <span class="property-name">background</span>: <span class="value">red</span>;
+          <span class="property-name">background</span>: <span id="backgroundvalue" class="value" contenteditable>url(http://fillmurray.com/2000/1000) center center / cover</span>;
           <span class="property-name">size</span>: <span id="sizevalue" class="value" contenteditable>80% 40px / calc(2/1) / 100px border-box</span>;
         }
       </code>
@@ -45,12 +42,24 @@
     <script src="parse-css/parse-css.js"></script>
     <script>
       const sizeval = document.getElementById('sizevalue');
+      const backgroundval = document.getElementById('backgroundvalue');
       const demoblock = document.getElementsByClassName('demo-block')[0];
       setElSize();
+      setBG();
       sizeval.addEventListener('keyup', (e) => {
         setElSize();
       });
-      window.onresize = setElSize;
+      backgroundval.addEventListener('keyup', (e) => {
+        setBG();
+      });
+      window.onresize = () => {
+        setElSize();
+        setBG();
+      };
+      function setBG() {
+        const bg = backgroundval.textContent;
+        demoblock.style.background = bg;
+      }
       function setElSize() {
         const size = sizeval.textContent;
         let props = {
