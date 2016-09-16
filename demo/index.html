@@ -14,21 +14,23 @@
       code > .property-name {
         color: #ed2655;
       }
-
+      [contenteditable] {
+        cursor: pointer;
+      }
       .demo {
         border: 2px solid #000;
         width: 500px;
         height: 500px;
       }
-
       .demo-block {
         background: red;
       }
     </style>
   </head>
   <body>
-    <h1>Sizing example</h1>
-    <p>Change the size property to see the changes in the demo block.</p>
+    <h1>Sizing demo</h1>
+    <p>This is an realtime demo of the <a href="https://jonathankingston.github.io/logical-sizing-properties/">Logical sizing properties spec</a></p>
+    <p>Change the value of the size property to see live changes in the demo block.</p>
     <pre>
       <code>
         <span class="selector">.demo-block</span> {
@@ -40,7 +42,7 @@
     <div class="demo">
       <div class="demo-block"></div>
     </div>
-    <script src="parse-css.js"></script>
+    <script src="parse-css/parse-css.js"></script>
     <script>
       const sizeval = document.getElementById('sizevalue');
       const demoblock = document.getElementsByClassName('demo-block')[0];
@@ -58,8 +60,6 @@
           'box-sizing': 'initial',
           'max-block-size': 'initial',
         };
-
-
 
         let cssParts = parseAListOfComponentValues(size);
         cssParts = cssParts.filter((item, i, arr) => {
