@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style type="text/css">
+      :root {
+        font: message-box;
+      }
+      code > input {
+        width: 30em;
+      }
+      code > .selector {
+        color: #0088cc; 
+      }
+      code > .property-name {
+        color: #ed2655;
+      }
+
+      .demo {
+        border: 2px solid #000;
+        width: 500px;
+        height: 500px;
+      }
+
+      .demo-block {
+        background: red;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Sizing example</h1>
+    <p>Change the size property to see the changes in the demo block.</p>
+    <pre>
+      <code>
+        <span class="selector">.demo-block</span> {
+          <span class="property-name">background</span>: <span class="value">red</span>;
+          <span class="property-name">size</span>: <span id="sizevalue" class="value" contenteditable>100% 20px / calc(2/1) /300px border-box</span>;
+        }
+      </code>
+    </pre>
+    <div class="demo">
+      <div class="demo-block"></div>
+    </div>
+    <script src="parse-css/parse-css.js"></script>
+    <script>
+      const sizeval = document.getElementById('sizevalue');
+      const demoblock = document.getElementsByClassName('demo-block')[0];
+      setElSize();
+      sizeval.addEventListener('keyup', (e) => {
+        setElSize();
+      });
+      function setElSize() {
+        const size = sizeval.textContent;
+        let props = {
+          'min-inline-size': 'initial',
+          'inline-size': 'initial',
+          'max-inline-size': 'initial',
+          'min-block-size': 'initial',
+          'box-sizing': 'initial',
+          'max-block-size': 'initial',
+        };
+
+
+
+        let cssParts = parseAListOfComponentValues(size);
+        cssParts = cssParts.filter((item, i, arr) => {
+          if (item.tokenType == 'WHITESPACE') {
+            return false;
+          }
+          if (item.tokenType == 'IDENT' && arr.length - 1 == i) {
+            props['box-sizing'] = item.value;
+            return false;
+          }
+          return true;
+        });
+        cssParts = cssParts.map((item) => {
+          //lets just cope with aspect-ratios here, this isn't a perfect thing
+          if (item.type == 'FUNCTION') {
+            const funcValues = item.value.filter((item) => {
+              if (item.tokenType != 'WHITESPACE') {
+                return true;
+              }
+            });
+            if (funcValues[0].tokenType == 'NUMBER' &&
+                 funcValues[1].tokenType == 'DELIM' &&
+                 funcValues[2].tokenType == 'NUMBER') {
+              const ratioVal = funcValues[0].value / funcValues[2].value;
+              return {
+                "tokenType":"NUMBER",
+                "value":ratioVal,
+                "type":"integer",
+                "repr":String(ratioVal)
+              };
+            }
+          }
+          return item;
+        })
+        let inlineSizeDimension = [];
+        let blockSizeDimension = [];
+        let prev;
+        cssParts.forEach((item, index) => {
+          if (item.tokenType !== 'DELIM') {
+            if (blockSizeDimension.length != 0 || prev && prev.tokenType != 'DELIM') {
+              blockSizeDimension.push(item);
+            } else {
+              inlineSizeDimension.push(item);
+            }
+          }
+          prev = item;
+        });
+        setProps('inline', inlineSizeDimension, props);
+        if (blockSizeDimension.length == 0) {
+          blockSizeDimension = inlineSizeDimension;
+        }
+        setProps('block', blockSizeDimension, props);
+        for (let prop in props) {
+          demoblock.style.setProperty(prop, props[prop]);
+        }
+        if (props['aspect-ratio'] &&
+            props['inline-size'] == 'auto' &&
+            props['block-size'] == 'auto') {
+          demoblock.style.blockSize = demoblock.clientWidth / props['aspect-ratio'] + 'px';
+        }
+        if (props['aspect-ratio'] &&
+            props['inline-size'] == 'auto') {
+          demoblock.style.inlineSize = demoblock.clientHeight * props['aspect-ratio'] + 'px';
+        }
+        if (props['aspect-ratio'] &&
+            props['block-size'] == 'auto') {
+          demoblock.style.blockSize = demoblock.clientWidth / props['aspect-ratio'] + 'px';
+        }
+      }
+
+      function setVal(component, props) {
+        if (component.tokenType == 'NUMBER') {
+          props['aspect-ratio'] = component.value;
+          return 'auto';
+        }
+        if (component.tokenType == 'PERCENTAGE') {
+          return component.value + '%';
+        }
+        return component.value + component.unit;
+      }
+
+      function setProps(type, components, props) {
+        if (components.length == 1) {
+          props[type+'-size'] = setVal(components[0], props);
+        } else if (components.length == 2) {
+          props['min-'+type+'-size'] = setVal(components[0], props);
+          props['max-'+type+'-size'] = setVal(components[1], props);
+        } else if (components.length == 3) {
+          props['min-'+type+'-size'] = setVal(components[0], props);
+          props[type+'-size'] = setVal(components[1], props);
+          props['max-'+type+'-size'] = setVal(components[2], props);
+        }
+      }
+    </script>
+  </body>
+</html>
