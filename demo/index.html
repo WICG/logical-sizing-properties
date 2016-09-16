@@ -113,21 +113,37 @@
         }
         setProps('block', blockSizeDimension, props);
         for (let prop in props) {
-          demoblock.style.setProperty(prop, props[prop]);
+          setProp(demoblock, prop, props[prop]);
         }
         if (props['aspect-ratio'] &&
             props['inline-size'] == 'auto' &&
             props['block-size'] == 'auto') {
-          demoblock.style.blockSize = demoblock.clientWidth / props['aspect-ratio'] + 'px';
+          setProp(demoblock, 'block-size', demoblock.clientWidth / props['aspect-ratio'] + 'px');
         }
         if (props['aspect-ratio'] &&
             props['inline-size'] == 'auto') {
-          demoblock.style.inlineSize = demoblock.clientHeight * props['aspect-ratio'] + 'px';
+          setProp(demoblock, 'inline-size', demoblock.clientHeight * props['aspect-ratio'] + 'px');
         }
         if (props['aspect-ratio'] &&
             props['block-size'] == 'auto') {
-          demoblock.style.blockSize = demoblock.clientWidth / props['aspect-ratio'] + 'px';
+          setProp(demoblock, 'block-size', demoblock.clientWidth / props['aspect-ratio'] + 'px');
         }
+      }
+
+      function setProp(el, prop, val) {
+        // Fix non logical prop browsers
+        const lookup = {
+          'min-inline-size': 'min-width',
+          'inline-size': 'width',
+          'max-inline-size': 'max-width',
+          'min-block-size': 'min-height',
+          'block-size': 'height',
+          'max-block-size': 'max-height',
+        };
+        if (prop in lookup) {
+          el.style.setProperty(lookup[prop], val);
+        }
+        el.style.setProperty(prop, val);
       }
 
       function setVal(component, props) {
